@@ -53,6 +53,7 @@ def califica(nombre, salida):
 				diccionario_respuestas_alumnos[diccionario_fichas[i]][j]="X"
 			j+=1
 		j=0
+		# print i+1
 		if (len(diccionario_respuestas_alumnos[diccionario_fichas[i]])<len(diccionario_respuestas[diccionario_examenes[diccionario_fichas[i]]])):
 			diccionario_respuestas_alumnos[diccionario_fichas[i]].append("X")
 		i+=1
@@ -76,6 +77,7 @@ def obtener_datos_alumnos(nombre_archivo):
 
 	for linea in archivo.readlines():
 		datos[i]=list(linea.rstrip('\n'))
+		# print i+1
 		i+=1
 	return datos
 
@@ -229,7 +231,7 @@ def compara_respuestas(alumnos_ex,alumnos_r,respuestas,resp_elim):
 		calificacion=(float(len(resp_correc))/float(len(respuestas[alumnos_ex[elemento]])-eliminadas))*10
 		calificaciones['promedio_dec']=round(calificacion,4)
 		calificaciones['resp_correc']=cantidad_resp_correc
-		calificaciones['resp_incorrec']=len(respuestas[alumnos_ex[elemento]])-cantidad_resp_correc-eliminadas
+		calificaciones['resp_incorrec']=len(respuestas[alumnos_ex[elemento]])-cantidad_resp_correc-eliminadas-sin_contestar
 		calificaciones['tipo_examen']=tipo_exa_alum[j]
 		calificaciones['sin_contestar']=sin_contestar
 		diccionario_calificaciones[elemento]=calificaciones
@@ -325,6 +327,8 @@ def escribe_en_excel(datos_alumnos,nombre,tipos_examen,salida):
 def main():
 	if len(sys.argv)<2:
 		nombre=raw_input("Ingresa el nombre del archivo de resultados de los alumnos: ")
+		salida=raw_input("Archivo de salida: ")
+	elif len(sys.argv)<3:
 		salida=raw_input("Archivo de salida: ")
 	else:
 		nombre = sys.argv[1]
